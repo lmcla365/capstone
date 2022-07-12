@@ -26,8 +26,8 @@
           dev: "/dev/xvdn"
           fstype: "ext4" #ext4, ext3 etc
       - name: mounting the filesystem
-      mount:
-        name: "/mnt"
-        src: "/dev/xvdn"
-        fstype: "ext4" #ext4, ext3 etc
-        state: mounted
+        mount:
+          name: "/mnt"
+          src: "/dev/xvdn"
+          fstype: "ext4" #ext4, ext3 etc
+          state: mounted
