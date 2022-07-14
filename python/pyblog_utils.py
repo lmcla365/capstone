@@ -71,6 +71,17 @@ def listposts():
     else:
         print(errorstr + str(response.status_code))
 
+def searchpost(search):
+    url = base_url + "/wp-json/wp/v2/posts?search=" + search
+    print(url)
+    header = {'Authorization': 'Basic ' + token.decode('utf-8')}
+    response = requests.get(url , headers=header)
+    if str(response.status_code)[0] == '2':
+        response_json = response.json()
+        print(response_json[0].get('title').get('rendered'))
+        print(response_json[0].get('content').get('rendered'))
+    else:
+        print(errorstr + str(response.status_code))
 
 def writepost(infile):
     title, content = readinfile(infile)
