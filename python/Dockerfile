@@ -18,17 +18,10 @@ RUN pip install -r /pyblog/requirements.txt
 #EXPOSE 8080
 
 #TODO Set default values for env variables
-#ENV
-
-# ARGs
-ARG APIUSER=someapiuser
-ARG APIPWD=someapipwd
-
-#HEALTHCHECK --interval=30s --timeout=3s \
-#    CMD curl -f http://localhost:8080/ || exit 1
+ENV APIUSER='someapiuser' APIPWD='someapipwd' WORDPRESSURL='someurl'
 
 #USER gthomas
 
-#ENTRYPOINT [ "python3 /pyblog/pyblog.py" , "latestpost" , "listposts" , "readpost" , "postcomment" ] 
 ENTRYPOINT [ "python3", "/pyblog/pyblog.py" ]
-CMD ["latestpost", "listposts" , "readpost" , "postcomment" ]
+
+CMD ["help"]
