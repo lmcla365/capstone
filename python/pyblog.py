@@ -4,7 +4,7 @@ import argparse
 import pyblog_utils
 
 
-if len(sys.argv) < 2:
+if len(sys.argv) < 2 or sys.argv[1].lower() == 'help':
     print(
         """    *** How to use pyblog ***
     Upload a blogpost from file:  python3 pyblog.py upload -f <filename>
