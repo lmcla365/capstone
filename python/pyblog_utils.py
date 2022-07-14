@@ -5,8 +5,9 @@ import os
 import fileinput
 
 
-base_url = 'http://localhost:8080/'
+#base_url = 'http://localhost:8080/'
 errorstr = 'Check the supplied arguments and user credentials defined in Application Passwords. Error: '
+baseurl = os.environ.get('WORDPRESSURL')
 apiuser = os.environ.get('APIUSER')
 apipwd = os.environ.get('APIPWD')
 credentials = apiuser + ':' + apipwd
