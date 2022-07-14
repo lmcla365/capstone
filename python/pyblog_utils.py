@@ -5,10 +5,10 @@ import os
 import fileinput
 
 
-base_url = 'http://3.80.76.206:8080/'
+base_url = 'http://localhost:8080/'
 errorstr = 'Check the supplied arguments and user credentials defined in Application Passwords. Error: '
-apiuser = os.environ.get('APIUSER','student')
-apipwd = os.environ.get('APIPWD','lp3P xt98 GFXx TzB0 cwmB 7bVO')
+apiuser = os.environ.get('APIUSER')
+apipwd = os.environ.get('APIPWD')
 credentials = apiuser + ':' + apipwd
 token = base64.b64encode(credentials.encode())
 
