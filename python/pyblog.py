@@ -8,7 +8,8 @@ if len(sys.argv) < 2 or sys.argv[1].lower() == 'help':
     print(
         """    *** How to use pyblog ***
     Upload a blogpost from file:  python3 pyblog.py upload -f <filename>
-    Update a blogpost from file by blog id:  python3 pyblog.py update -f <filename>  <id>  
+    Update a blogpost from file by blog id:  python3 pyblog.py update -f <filename>  <id>
+    Search blogpost by keyword:  python3 pyblog.py searchpost <keyword>
     Show the latest blog post:  python3 pyblog.py latestpost
     List all blog post:  python3 pyblog.py listposts')
     Show specific blog post:  python3 pyblog.py readpost <post_id>
@@ -24,6 +25,9 @@ if sys.argv[1].lower() == "listposts":
     exit()
 if sys.argv[1].lower() == "readpost":
     pyblog_utils.readpost(sys.argv[2])
+    exit()
+if (sys.argv[1].lower() == 'searchpost'):
+    pyblog_utils.searchpost(sys.argv[2])
     exit()
 if sys.argv[1].lower() == "postcomment":
     pyblog_utils.postcomment(str(sys.argv[2]), sys.argv[3], sys.argv[4], sys.argv[5])
