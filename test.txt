@@ -1,3 +1,0 @@
-This is a test file
-
-Adding a line to the file
