@@ -1,3 +1,7 @@
+# Created By  : NULL Capstone Cohort7 Team
+# Created Date: 7/22
+# version ='1.0'
+# Methods for accessing Wordpress API V:2
 import sys
 import os
 import argparse
