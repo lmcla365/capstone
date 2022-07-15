@@ -1,5 +1,6 @@
 import requests
-import json
+
+# import json
 import base64
 import os
 import fileinput
@@ -13,9 +14,10 @@ apipwd = os.environ.get("APIPWD")  # , "lp3P xt98 GFXx TzB0 cwmB 7bVO")
 if isinstance(apiuser, str):
     credentials = apiuser + ":" + apipwd
 else:
-    print('Set system varibles on target system for WORDPRESSURL, APIUSER, APIPWD')
+    print("Set system varibles on target system for WORDPRESSURL, APIUSER, APIPWD")
     exit()
 token = base64.b64encode(credentials.encode())
+
 
 # Read file contents from stdin files
 def readinfile(infile):
@@ -75,17 +77,19 @@ def listposts():
     else:
         print(errorstr + str(response.status_code))
 
+
 def searchpost(search):
     url = base_url + "/wp-json/wp/v2/posts?search=" + search
     print(url)
-    header = {'Authorization': 'Basic ' + token.decode('utf-8')}
-    response = requests.get(url , headers=header)
-    if str(response.status_code)[0] == '2':
+    header = {"Authorization": "Basic " + token.decode("utf-8")}
+    response = requests.get(url, headers=header)
+    if str(response.status_code)[0] == "2":
         response_json = response.json()
-        print(response_json[0].get('title').get('rendered'))
-        print(response_json[0].get('content').get('rendered'))
+        print(response_json[0].get("title").get("rendered"))
+        print(response_json[0].get("content").get("rendered"))
     else:
         print(errorstr + str(response.status_code))
+
 
 def writepost(infile):
     title, content = readinfile(infile)
