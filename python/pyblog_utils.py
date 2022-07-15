@@ -10,7 +10,11 @@ errorstr = "Check the supplied arguments and user credentials defined in Applica
 base_url = os.environ.get("WORDPRESSURL")  # , "http://3.80.76.206:8080/")
 apiuser = os.environ.get("APIUSER")  # , "student")
 apipwd = os.environ.get("APIPWD")  # , "lp3P xt98 GFXx TzB0 cwmB 7bVO")
-credentials = apiuser + ":" + apipwd
+if isinstance(apiuser, str):
+    credentials = apiuser + ":" + apipwd
+else:
+    print('Set system varibles on target system for WORDPRESSURL, APIUSER, APIPWD')
+    exit()
 token = base64.b64encode(credentials.encode())
 
 # Read file contents from stdin files
