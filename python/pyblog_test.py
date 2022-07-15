@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-import solar
+import pyblog
+
 
 def test_wphealthcheck():
     val = wphealthcheck()
