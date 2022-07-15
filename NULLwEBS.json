@@ -1,0 +1,927 @@
+{
+
+    "AWSTemplateFormatVersion": "2010-09-09",
+
+    "Metadata": {
+
+        "AWS::CloudFormation::Designer": {
+
+            "3a8a9c43-f9de-4823-934b-f43c4ac00794": {
+
+                "size": {
+
+                    "width": 60,
+
+                    "height": 60
+
+                },
+
+                "position": {
+
+                    "x": 190,
+
+                    "y": 180
+
+                },
+
+                "z": 0,
+
+                "embeds": [],
+
+                "isassociatedwith": [
+
+                    "e5da0ed8-10e5-44c9-91b6-8877e8ddc4a4",
+
+                    "0472a016-f097-40c0-b999-634a82070bf1"
+
+                ]
+
+            },
+
+            "e5da0ed8-10e5-44c9-91b6-8877e8ddc4a4": {
+
+                "size": {
+
+                    "width": 60,
+
+                    "height": 60
+
+                },
+
+                "position": {
+
+                    "x": 190,
+
+                    "y": 80
+
+                },
+
+                "z": 0,
+
+                "embeds": []
+
+            },
+
+            "0472a016-f097-40c0-b999-634a82070bf1": {
+
+                "size": {
+
+                    "width": 60,
+
+                    "height": 60
+
+                },
+
+                "position": {
+
+                    "x": 380,
+
+                    "y": 50
+
+                },
+
+                "z": 0,
+
+                "embeds": []
+
+            },
+
+            "a95856f3-682d-45e3-9143-23963c153f71": {
+
+                "size": {
+
+                    "width": 60,
+
+                    "height": 60
+
+                },
+
+                "position": {
+
+                    "x": 370,
+
+                    "y": 180
+
+                },
+
+                "z": 0,
+
+                "embeds": [],
+
+                "isassociatedwith": [
+
+                    "e5da0ed8-10e5-44c9-91b6-8877e8ddc4a4",
+
+                    "0472a016-f097-40c0-b999-634a82070bf1"
+
+                ]
+
+            },
+
+            "fbafc535-3321-4630-97ab-954be8e93583": {
+
+                "size": {
+
+                    "width": 60,
+
+                    "height": 60
+
+                },
+
+                "position": {
+
+                    "x": 490,
+
+                    "y": 240
+
+                },
+
+                "z": 0,
+
+                "embeds": [],
+
+                "isassociatedwith": [
+
+                    "e5da0ed8-10e5-44c9-91b6-8877e8ddc4a4",
+
+                    "0472a016-f097-40c0-b999-634a82070bf1"
+
+                ]
+
+            },
+
+            "31ca818b-ad12-4902-a810-1530dc8bc394": {
+
+                "size": {
+
+                    "width": 60,
+
+                    "height": 60
+
+                },
+
+                "position": {
+
+                    "x": 600,
+
+                    "y": 180
+
+                },
+
+                "z": 0,
+
+                "embeds": []
+
+            },
+
+            "9a3eca93-1508-4090-87ed-90ea7e2f8279": {
+
+                "source": {
+
+                    "id": "31ca818b-ad12-4902-a810-1530dc8bc394"
+
+                },
+
+                "target": {
+
+                    "id": "a95856f3-682d-45e3-9143-23963c153f71"
+
+                },
+
+                "z": 0
+
+            }
+
+        }
+
+    },
+
+    "Resources": {
+
+        "NULLinfra": {
+
+            "Type": "AWS::EC2::SecurityGroup",
+
+            "Properties": {
+
+                "GroupDescription": "allow ports 80, 443, 8085",
+
+                "SecurityGroupIngress": [
+
+                    {
+
+                        "IpProtocol": "tcp",
+
+                        "FromPort": "80",
+
+                        "ToPort": "80",
+
+                        "CidrIp": "0.0.0.0/0"
+
+                    },
+
+                    {
+
+                        "IpProtocol": "tcp",
+
+                        "FromPort": "443",
+
+                        "ToPort": "443",
+
+                        "CidrIp": "0.0.0.0/0"
+
+                    },
+
+                    {
+
+                        "IpProtocol": "tcp",
+
+                        "FromPort": "8085",
+
+                        "ToPort": "8085",
+
+                        "CidrIp": "0.0.0.0/0"
+
+                    }
+
+                ]
+
+            },
+
+            "Metadata": {
+
+                "AWS::CloudFormation::Designer": {
+
+                    "id": "e5da0ed8-10e5-44c9-91b6-8877e8ddc4a4"
+
+                }
+
+            }
+
+        },
+
+        "NULLinfraEC2": {
+
+            "Type": "AWS::EC2::Instance",
+
+            "Properties": {
+
+                "InstanceType": "t2.medium",
+
+                "SecurityGroups": [
+
+                    {
+
+                        "Ref": "NULLinfra"
+
+                    },
+
+                    {
+
+                        "Ref": "NULLsg"
+
+                    }
+
+                ],
+
+                "KeyName": {
+
+                    "Ref": "KeyName"
+
+                },
+
+                "Tags": [
+
+                    {
+
+                        "Key": "Name",
+
+                        "Value": "NullInfra"
+
+                    },
+
+                    {
+
+                        "Key": "Course",
+
+                        "Value": "IEA"
+
+                    },
+
+                    {
+
+                        "Key": "Cohort",
+
+                        "Value": "7"
+
+                    },
+
+                    {
+
+                        "Key": "Team",
+
+                        "Value": "Null"
+
+                    }
+
+                ],
+
+                "ImageId": "ami-0729e439b6769d6ab"
+
+            },
+
+            "Metadata": {
+
+                "AWS::CloudFormation::Designer": {
+
+                    "id": "3a8a9c43-f9de-4823-934b-f43c4ac00794"
+
+                }
+
+            }
+
+        },
+
+        "NULLsg": {
+
+            "Type": "AWS::EC2::SecurityGroup",
+
+            "Properties": {
+
+                "GroupDescription": "allow ports 22, 8080",
+
+                "SecurityGroupIngress": [
+
+                    {
+
+                        "IpProtocol": "tcp",
+
+                        "FromPort": "22",
+
+                        "ToPort": "22",
+
+                        "CidrIp": "0.0.0.0/0"
+
+                    },
+
+                    {
+
+                        "IpProtocol": "tcp",
+
+                        "FromPort": "8080",
+
+                        "ToPort": "8080",
+
+                        "CidrIp": "0.0.0.0/0"
+
+                    }
+
+                ]
+
+            },
+
+            "Metadata": {
+
+                "AWS::CloudFormation::Designer": {
+
+                    "id": "0472a016-f097-40c0-b999-634a82070bf1"
+
+                }
+
+            }
+
+        },
+
+        "NULLprod": {
+
+            "Type": "AWS::EC2::Instance",
+
+            "Properties": {
+
+                "InstanceType": "t2.micro",
+
+                "SecurityGroups": [
+
+                    {
+
+                        "Ref": "NULLsg"
+
+                    }
+
+                ],
+
+                "KeyName": {
+
+                    "Ref": "KeyName"
+
+                },
+
+                "Tags": [
+
+                    {
+
+                        "Key": "Name",
+
+                        "Value": "Nullprod"
+
+                    },
+
+                    {
+
+                        "Key": "Course",
+
+                        "Value": "IEA"
+
+                    },
+
+                    {
+
+                        "Key": "Cohort",
+
+                        "Value": "7"
+
+                    },
+
+                    {
+
+                        "Key": "Team",
+
+                        "Value": "Null"
+
+                    }
+
+                ],
+
+                "ImageId": "ami-0729e439b6769d6ab"
+
+            },
+
+            "Metadata": {
+
+                "AWS::CloudFormation::Designer": {
+
+                    "id": "a95856f3-682d-45e3-9143-23963c153f71"
+
+                }
+
+            }
+
+        },
+
+        "NULLstage": {
+
+            "Type": "AWS::EC2::Instance",
+
+            "Properties": {
+
+                "InstanceType": "t2.micro",
+
+                "SecurityGroups": [
+
+                    {
+
+                        "Ref": "NULLsg"
+
+                    }
+
+                ],
+
+                "KeyName": {
+
+                    "Ref": "KeyName"
+
+                },
+
+                "Tags": [
+
+                    {
+
+                        "Key": "Name",
+
+                        "Value": "Nullstage"
+
+                    },
+
+                    {
+
+                        "Key": "Course",
+
+                        "Value": "IEA"
+
+                    },
+
+                    {
+
+                        "Key": "Cohort",
+
+                        "Value": "7"
+
+                    },
+
+                    {
+
+                        "Key": "Team",
+
+                        "Value": "Null"
+
+                    }
+
+                ],
+
+                "ImageId": "ami-0729e439b6769d6ab"
+
+            },
+
+            "Metadata": {
+
+                "AWS::CloudFormation::Designer": {
+
+                    "id": "fbafc535-3321-4630-97ab-954be8e93583"
+
+                }
+
+            }
+
+        },
+
+        "stageEBS": {
+
+            "Type": "AWS::EC2::Volume",
+
+            "Properties": {
+
+                "Size": "20",
+
+                "AvailabilityZone": {
+
+                    "Fn::GetAtt": [
+
+                        "NULLstage",
+
+                        "AvailabilityZone"
+
+                    ]
+
+                },
+
+                "Tags": [
+
+                    {
+
+                        "Key": "Name",
+
+                        "Value": "stageEBS"
+
+                    },
+
+                    {
+
+                        "Key": "Course",
+
+                        "Value": "IEA"
+
+                    },
+
+                    {
+
+                        "Key": "Cohort",
+
+                        "Value": "7"
+
+                    },
+
+                    {
+
+                        "Key": "Team",
+
+                        "Value": "Null"
+
+                    }
+
+                ]
+
+            },
+
+            "Metadata": {
+
+                "AWS::CloudFormation::Designer": {
+
+                    "id": "31ca818b-ad12-4902-a810-1530dc8bc394"
+
+                }
+
+            }
+
+        },
+
+        "stageMount": {
+
+            "Type": "AWS::EC2::VolumeAttachment",
+
+            "Properties": {
+
+                "InstanceId": {
+
+                    "Ref": "NULLstage"
+
+                },
+
+                "VolumeId": {
+
+                    "Ref": "stageEBS"
+
+                },
+
+                "Device": "/dev/sdn"
+
+            },
+
+            "Metadata": {
+
+                "AWS::CloudFormation::Designer": {
+
+                    "id": "9a3eca93-1508-4090-87ed-90ea7e2f8279"
+
+                }
+
+            }
+
+        },
+
+        "prodEBS": {
+
+            "Type": "AWS::EC2::Volume",
+
+            "Properties": {
+
+                "Size": "20",
+
+                "AvailabilityZone": {
+
+                    "Fn::GetAtt": [
+
+                        "NULLprod",
+
+                        "AvailabilityZone"
+
+                    ]
+
+                },
+
+                "Tags": [
+
+                    {
+
+                        "Key": "Name",
+
+                        "Value": "prodEBS"
+
+                    },
+
+                    {
+
+                        "Key": "Course",
+
+                        "Value": "IEA"
+
+                    },
+
+                    {
+
+                        "Key": "Cohort",
+
+                        "Value": "7"
+
+                    },
+
+                    {
+
+                        "Key": "Team",
+
+                        "Value": "Null"
+
+                    }
+
+                ]
+
+            },
+
+            "Metadata": {
+
+                "AWS::CloudFormation::Designer": {
+
+                    "id": "31ca818b-ad12-4902-a810-1530dc8bc394"
+
+                }
+
+            }
+
+        },
+
+        "prodMount": {
+
+            "Type": "AWS::EC2::VolumeAttachment",
+
+            "Properties": {
+
+                "InstanceId": {
+
+                    "Ref": "NULLprod"
+
+                },
+
+                "VolumeId": {
+
+                    "Ref": "prodEBS"
+
+                },
+
+                "Device": "/dev/sdn"
+
+            },
+
+            "Metadata": {
+
+                "AWS::CloudFormation::Designer": {
+
+                    "id": "9a3eca93-1508-4090-87ed-90ea7e2f8279"
+
+                }
+
+            }
+
+        },
+
+        "infraEBS": {
+
+            "Type": "AWS::EC2::Volume",
+
+            "Properties": {
+
+                "Size": "20",
+
+                "AvailabilityZone": {
+
+                    "Fn::GetAtt": [
+
+                        "NULLinfraEC2",
+
+                        "AvailabilityZone"
+
+                    ]
+
+                },
+
+                "Tags": [
+
+                    {
+
+                        "Key": "Name",
+
+                        "Value": "infraEBS"
+
+                    },
+
+                    {
+
+                        "Key": "Course",
+
+                        "Value": "IEA"
+
+                    },
+
+                    {
+
+                        "Key": "Cohort",
+
+                        "Value": "7"
+
+                    },
+
+                    {
+
+                        "Key": "Team",
+
+                        "Value": "Null"
+
+                    }
+
+                ]
+
+            },
+
+            "Metadata": {
+
+                "AWS::CloudFormation::Designer": {
+
+                    "id": "31ca818b-ad12-4902-a810-1530dc8bc394"
+
+                }
+
+            }
+
+        },
+
+        "infraMount": {
+
+            "Type": "AWS::EC2::VolumeAttachment",
+
+            "Properties": {
+
+                "InstanceId": {
+
+                    "Ref": "NULLinfraEC2"
+
+                },
+
+                "VolumeId": {
+
+                    "Ref": "infraEBS"
+
+                },
+
+                "Device": "/dev/sdn"
+
+            },
+
+            "Metadata": {
+
+                "AWS::CloudFormation::Designer": {
+
+                    "id": "9a3eca93-1508-4090-87ed-90ea7e2f8279"
+
+                }
+
+            }
+
+        }
+
+    },
+
+    "Parameters": {
+
+        "KeyName": {
+
+            "Description": "Name of an existing EC2 KeyPair to enable SSH access to the instance",
+
+            "Type": "AWS::EC2::KeyPair::KeyName",
+
+            "ConstraintDescription": "must be the name of an existing EC2 KeyPair."
+
+        }
+
+    },
+
+    "Outputs": {
+
+        "infraIP": {
+
+            "Value": {
+
+                "Fn::GetAtt": [
+
+                    "NULLinfraEC2",
+
+                    "PublicIp"
+
+                ]
+
+            }
+
+        },
+
+        "prodIP": {
+
+            "Value": {
+
+                "Fn::GetAtt": [
+
+                    "NULLprod",
+
+                    "PublicIp"
+
+                ]
+
+            }
+
+        },
+
+        "stageIP": {
+
+            "Value": {
+
+                "Fn::GetAtt": [
+
+                    "NULLstage",
+
+                    "PublicIp"
+
+                ]
+
+            }
+
+        }
+
+    }
+
+}
