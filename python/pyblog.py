@@ -7,44 +7,44 @@ import os
 import argparse
 import pyblog_utils
 
-
-if len(sys.argv) < 2 or sys.argv[1].lower() == 'help':
-    print(
-        """    *** How to use pyblog ***
+# 1st check if wordpress is running.
+if pyblog_utils.wphealthcheck() != 200:
+    print('Wordpress is currently down, check if site is running')
+    exit()
+    
+arglen = len(sys.argv) 
+if arglen < 2 or sys.argv[1].lower() == 'help':
+    print('''    *** How to use pyblog ***
     Upload a blogpost from file:  python3 pyblog.py upload -f <filename>
-    Update a blogpost from file by blog id:  python3 pyblog.py update -f <filename>  <id>
-    Search blogpost by keyword:  python3 pyblog.py searchpost <keyword>
+    Update a blogpost from file by blog id:  python3 pyblog.py update -f <filename>  <id>  
     Show the latest blog post:  python3 pyblog.py latestpost
     List all blog post:  python3 pyblog.py listposts')
     Show specific blog post:  python3 pyblog.py readpost <post_id>
-    Post comment to a blog post:  python3 pyblog.py postcomment <post_id> "<comment>" <author name> <author email>"""
-    )
-    quit()
+    Post comment to a blog post:  python3 pyblog.py postcomment <post_id> "<comment>" <author name> <author email>''')
+    exit()
 
-if sys.argv[1].lower() == "latestpost":
-    pyblog_utils.getposts()
-    exit()
-if sys.argv[1].lower() == "listposts":
-    pyblog_utils.listposts()
-    exit()
-if sys.argv[1].lower() == "readpost":
-    pyblog_utils.readpost(sys.argv[2])
-    exit()
-if (sys.argv[1].lower() == 'searchpost'):
-    pyblog_utils.searchpost(sys.argv[2])
-    exit()
-if sys.argv[1].lower() == "postcomment":
-    pyblog_utils.postcomment(str(sys.argv[2]), sys.argv[3], sys.argv[4], sys.argv[5])
-    exit()
-if (
-    len(sys.argv) == 4
-    and sys.argv[1].lower() == "upload"
-    and os.path.exists(sys.argv[3])
-):
-    pyblog_utils.writepost(sys.argv[3])
-if (
-    len(sys.argv) == 5
-    and sys.argv[1].lower() == "update"
-    and os.path.exists(sys.argv[4])
-):
-    pyblog_utils.updatepost(sys.argv[4], sys.argv[2])
+argv1 = sys.argv[1].lower()
+if arglen == 2:
+    if (argv1 == 'latestpost'):
+        pyblog_utils.getposts()
+
+    elif (argv1 == 'listposts'):
+        pyblog_utils.listposts()
+    else:
+        exit()
+if arglen == 3:
+    argv2 = sys.argv[2].lower()
+    if (argv1 == 'readpost'):
+        pyblog_utils.readpost(sys.argv[2])
+    elif (argv1 == 'searchpost'):
+        pyblog_utils.searchpost(sys.argv[2])
+    else:
+        exit()
+if arglen > 3:
+    if (argv1 == 'postcomment'):
+        pyblog_utils.postcomment(str(sys.argv[2]), sys.argv[3], sys.argv[4], sys.argv[5] )
+    if (arglen == 4 and argv1 == 'upload' and  os.path.exists(sys.argv[3])):
+        pyblog_utils.writepost(sys.argv[3])
+    if (arglen == 5 and argv1 == 'update' and  os.path.exists(sys.argv[4])):
+        pyblog_utils.updatepost(sys.argv[4], sys.argv[2])
+exit()
