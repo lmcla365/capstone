@@ -1,33 +1,47 @@
 #!/usr/bin/env python3
 
-import pyblog
+import pyblog_utils
 
 
 def test_wphealthcheck():
     val = pyblog_utils.wphealthcheck()
     assert val == 200
 
+
 def test_readnonpost():
     val = pyblog_utils.readpost(0)
     assert val == "Post ID not valid."
 
+
 def test_readpost():
     val = pyblog_utils.readpost(1)
-    assert val == """Hello world!
+    assert (
+        val
+        == """Hello world!
 <p>Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p>
 """
+    )
+
 
 def test_getposts():
     val = pyblog_utils.getposts()
-    assert val == """Hello world!
+    assert (
+        val
+        == """Hello world!
 <p>Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p>
 """
+    )
+
 
 def test_searchpost():
     val = pyblog_utils.searchpost("hello")
-    assert val == """Hello world!
+    assert (
+        val
+        == """Hello world!
 <p>Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p>
 """
+    )
+
 
 def test_writepost():
     f = open("infile.txt", "a")
@@ -35,6 +49,7 @@ def test_writepost():
     f.close()
     val = pyblog_utils.writepost("infile.txt")
     assert val == "Post written to Wordpress."
+
 
 def test_updatepost():
     f = open("update.txt", "a")
@@ -44,7 +59,10 @@ def test_updatepost():
     val = pyblog_utils.updatepost("update.txt", postid)
     assert val == "Post updated in Wordpress."
 
+
 def test_postcomment():
     postid = pyblog_utils.getlastpostid()
-    val = pyblog_utils.postcomment(postid,"This is a comment","student","student@example.com")
+    val = pyblog_utils.postcomment(
+        postid, "This is a comment", "student", "student@example.com"
+    )
     assert val == "Comment written to Wordpress post."
