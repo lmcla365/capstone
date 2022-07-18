@@ -19,120 +19,141 @@ else:
 token = base64.b64encode(credentials.encode())
 
 
+resp = ''
+
+def wphealthcheck():
+    page = requests.get(base_url)
+    #print(type(page))
+    return int(page.status_code)
+
 # Read file contents from stdin files
 def readinfile(infile):
     ctr = 0
-    content = ""
+    title = ''
+    content = ''
     for line in fileinput.input(files=(infile)):
         if ctr < 1:
             title = line
             ctr += 1
         else:
             content += line
-    return (title, content)
-
+    return(title, content)
 
 # Read latest post
 def readpost(id):
     url = base_url + "/wp-json/wp/v2/posts?include=" + str(id)
-    header = {"Authorization": "Basic " + token.decode("utf-8")}
-    response = requests.get(url, headers=header)
-    if str(response.status_code)[0] == "2":
+    header = {'Authorization': 'Basic ' + token.decode('utf-8')}
+    response = requests.get(url , headers=header)
+    if response.json() == []:
+        resp = 'Post ID not valid.'
+    elif (str(response.status_code)[0] == '2' and response.json() != []):
         response_json = response.json()
-        print(response_json[0].get("title").get("rendered"))
-        print(response_json[0].get("content").get("rendered"))
+        resp = response_json[0].get('title').get('rendered') + '\n' + response_json[0].get('content').get('rendered')
     else:
-        print(errorstr + str(response.status_code))
-
+        resp = errorstr + str(response.status_code)
+    return resp
 
 # Get all posts and pass latest to readpost
 def getposts():
     url = base_url + "/wp-json/wp/v2/posts"
-    header = {"Authorization": "Basic " + token.decode("utf-8")}
-    response = requests.get(url, headers=header)
-    if str(response.status_code)[0] == "2":
+    header = {'Authorization': 'Basic ' + token.decode('utf-8')}
+    response = requests.get(url , headers=header)
+    if str(response.status_code)[0] == '2':
         response_json = response.json()
-        print(response_json[0].get("id"))
-        readpost(response_json[0].get("id"))
+        resp = readpost(response_json[0].get('id'))
     else:
-        print(errorstr + str(response.status_code))
+        resp = errorstr + str(response.status_code)
+    return resp
+
+def getlastpostid():
+    url = base_url + "/wp-json/wp/v2/posts"
+    header = {'Authorization': 'Basic ' + token.decode('utf-8')}
+    response = requests.get(url , headers=header)
+    if str(response.status_code)[0] == '2':
+        response_json = response.json()
+        resp = response_json[0].get('id')
+    else:
+        resp = errorstr + str(response.status_code)
+    return resp
 
 
 # Lists all posts by id and title
 def listposts():
     url = base_url + "/wp-json/wp/v2/posts"
-    header = {"Authorization": "Basic " + token.decode("utf-8")}
-    response = requests.get(url, headers=header)
-    if str(response.status_code)[0] == "2":
+    header = {'Authorization': 'Basic ' + token.decode('utf-8')}
+    response = requests.get(url , headers=header)
+    if str(response.status_code)[0] == '2':
         response_json = response.json()
-        print("Post ID    Post Title")
+        resp = 'Post ID    Post Title\n'
         i = 0
         while i < len(response_json):
-            print(
-                response_json[i].get("id"),
-                "     ",
-                response_json[i].get("title").get("rendered"),
-            )
+            resp += str(response_json[i].get('id')) + '     ' + response_json[i].get('title').get('rendered') + '\n'
+            #print(response_json[i].get('id'),'     ',response_json[i].get('title').get('rendered'))
             i += 1
     else:
-        print(errorstr + str(response.status_code))
+        resp = errorstr + str(response.status_code)
+    return resp
 
-
+# search post by keyword
 def searchpost(search):
     url = base_url + "/wp-json/wp/v2/posts?search=" + search
     print(url)
-    header = {"Authorization": "Basic " + token.decode("utf-8")}
-    response = requests.get(url, headers=header)
-    if str(response.status_code)[0] == "2":
+    header = {'Authorization': 'Basic ' + token.decode('utf-8')}
+    response = requests.get(url , headers=header)
+    if str(response.status_code)[0] == '2':
         response_json = response.json()
-        print(response_json[0].get("title").get("rendered"))
-        print(response_json[0].get("content").get("rendered"))
+        resp = response_json[0].get('title').get('rendered') + '\n' + response_json[0].get('content').get('rendered')
     else:
-        print(errorstr + str(response.status_code))
-
+        resp = errorstr + str(response.status_code)
+    return resp
 
 def writepost(infile):
     title, content = readinfile(infile)
     url = base_url + "/wp-json/wp/v2/posts"
-    header = {"Authorization": "Basic " + token.decode("utf-8")}
-    post = {"title": title, "status": "publish", "content": content}
-    response = requests.post(url, headers=header, json=post)
-    if str(response.status_code)[0] == "2":
-        print("Post written to Wordpress.")
+    header = {'Authorization': 'Basic ' + token.decode('utf-8')}
+    post = {
+       'title' : title,
+       'status' : 'publish',
+       'content' : content
+    }
+    response = requests.post(url , headers=header, json=post)
+    if str(response.status_code)[0] == '2':
+        resp = 'Post written to Wordpress.'
     else:
-        print(errorstr + str(response.status_code))
-
+        resp = errorstr + str(response.status_code)
+    return resp
 
 def updatepost(infile, id):
     title, content = readinfile(infile)
-    print("title::: ", title)
-    url = base_url + "/wp-json/wp/v2/posts/" + str(id)
+    print('title::: ',title)
+    url = base_url + "/wp-json/wp/v2/posts/"+ str(id)
     print(url)
-    header = {"Authorization": "Basic " + token.decode("utf-8")}
+    header = {'Authorization': 'Basic ' + token.decode('utf-8')}
     post = {
-        "title": title,
-        "status": "publish",
-        "format": "standard",
-        "content": content,
+       'title' : title,
+       'status' : 'publish',
+       'format' : 'standard',
+       'content' : content
     }
-    response = requests.post(url, headers=header, json=post)
-    if str(response.status_code)[0] == "2":
-        print("Post updated in Wordpress.")
+    response = requests.post(url , headers=header, json=post)
+    if str(response.status_code)[0] == '2':
+        resp = 'Post updated in Wordpress.'
     else:
-        print(errorstr + str(response.status_code))
-
+        resp = errorstr + str(response.status_code)
+    return resp
 
 def postcomment(id, MyComment, author_name, author_email):
     url = base_url + "/wp-json/wp/v2/comments"
-    header = {"Authorization": "Basic " + token.decode("utf-8")}
+    header = {'Authorization': 'Basic ' + token.decode('utf-8')}
     post = {
-        "post": id,
-        "content": MyComment,
-        "author_name": author_name,
-        "author_email": author_email,
+       'post' : id,
+       'content' : MyComment,
+       'author_name' : author_name,
+       'author_email' : author_email
     }
-    response = requests.post(url, headers=header, json=post)
-    if str(response.status_code)[0] == "2":
-        print("Comment written to Wordpress post.")
+    response = requests.post(url , headers=header, json=post)
+    if str(response.status_code)[0] == '2':
+        resp = 'Comment written to Wordpress post.'
     else:
-        print(errorstr + str(response.status_code))
+        resp = errorstr + str(response.status_code)
+    return resp
