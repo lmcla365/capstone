@@ -4,7 +4,7 @@ services:
   wordpress:
     depends_on:
       - db
-    image: wordpress:4.9
+    image: wordpress
     ports:
       - 8080:80
     environment:
@@ -13,15 +13,6 @@ services:
       WORDPRESS_DB_PASSWORD: examplepass
       WORDPRESS_DB_NAME: exampledb
       DEMO_THING: "Pretty nifty"
-    logging:
-      driver: splunk
-      options:
-        splunk-format: "json"
-        splunk-insecureskipverify: "true"
-        splunk-source: "app"
-        splunk-token: "37a1d361-2114-400b-a0c7-3c84ddd3074d"
-        splunk-url: "https://prd-p-s74ir.splunkcloud.com:8088"
-        tag: "{{.ImageName}}/{{.Name}}/{{.ID}}"
     volumes:
       - wordpress:/var/www/html
 
