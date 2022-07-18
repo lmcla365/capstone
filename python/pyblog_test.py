@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import pyblog
+import pyblog_utils
 
 
 def test_wphealthcheck():
