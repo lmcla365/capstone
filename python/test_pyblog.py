@@ -4,28 +4,47 @@ import pyblog
 
 
 def test_wphealthcheck():
-    val = wphealthcheck()
+    val = pyblog_utils.wphealthcheck()
     assert val == 200
-    
+
+def test_readnonpost():
+    val = pyblog_utils.readpost(0)
+    assert val == "Post ID not valid."
+
 def test_readpost():
-    val = readpost(1)
+    val = pyblog_utils.readpost(1)
     assert val == """Hello world!
-    Welcome to WordPress. This is your first post. Edit or delete it, then start writing!
-    """
+<p>Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p>
+"""
 
 def test_getposts():
-    val = getposts()
+    val = pyblog_utils.getposts()
     assert val == """Hello world!
-    Welcome to WordPress. This is your first post. Edit or delete it, then start writing!
-    """
+<p>Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p>
+"""
 
-def test_listposts():
-    val = listposts()
-    assert val == """Post ID    Post Title
-    6       test post
-    1       Hello world!
-    """
+def test_searchpost():
+    val = pyblog_utils.searchpost("hello")
+    assert val == """Hello world!
+<p>Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p>
+"""
 
 def test_writepost():
-    val = writepost('Test_Title','Test_Content')
-    assert val == 'Post written to Wordpress.'
+    f = open("infile.txt", "a")
+    f.write("Writepost test \n\nNow the file has content!")
+    f.close()
+    val = pyblog_utils.writepost("infile.txt")
+    assert val == "Post written to Wordpress."
+
+def test_updatepost():
+    f = open("update.txt", "a")
+    f.write("Updatepost test \n\nNow the file has been updated!")
+    f.close()
+    postid = pyblog_utils.getlastpostid()
+    val = pyblog_utils.updatepost("update.txt", postid)
+    assert val == "Post updated in Wordpress."
+
+def test_postcomment():
+    postid = pyblog_utils.getlastpostid()
+    val = pyblog_utils.postcomment(postid,"This is a comment","student","student@example.com")
+    assert val == "Comment written to Wordpress post."
