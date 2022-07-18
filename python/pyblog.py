@@ -28,28 +28,27 @@ if arglen < 2 or sys.argv[1].lower() == "help":
 
 argv1 = sys.argv[1].lower()
 if arglen == 2:
-    if argv1 == "latestpost":
-        pyblog_utils.getposts()
-
-    elif argv1 == "listposts":
-        pyblog_utils.listposts()
+    if (argv1 == "latestpost"):
+        resp = pyblog_utils.getposts()
+    elif (argv1 == "listposts"):
+        resp = pyblog_utils.listposts()
     else:
         exit()
 if arglen == 3:
     argv2 = sys.argv[2].lower()
-    if argv1 == "readpost":
-        pyblog_utils.readpost(sys.argv[2])
-    elif argv1 == "searchpost":
-        pyblog_utils.searchpost(sys.argv[2])
+    if (argv1 == "readpost"):
+        resp = pyblog_utils.readpost(sys.argv[2])
+    elif (argv1 == "searchpost"):
+        resp = pyblog_utils.searchpost(sys.argv[2])
     else:
         exit()
 if arglen > 3:
-    if argv1 == "postcomment":
-        pyblog_utils.postcomment(
-            str(sys.argv[2]), sys.argv[3], sys.argv[4], sys.argv[5]
-        )
-    if arglen == 4 and argv1 == "upload" and os.path.exists(sys.argv[3]):
-        pyblog_utils.writepost(sys.argv[3])
-    if arglen == 5 and argv1 == "update" and os.path.exists(sys.argv[4]):
-        pyblog_utils.updatepost(sys.argv[4], sys.argv[2])
-exit()
+    if (argv1 == "postcomment"):
+        resp = pyblog_utils.postcomment(str(sys.argv[2]), sys.argv[3], sys.argv[4], sys.argv[5] )
+    elif (arglen == 4 and argv1 == "upload" and  os.path.exists(sys.argv[3])):
+        resp = pyblog_utils.writepost(sys.argv[3])
+    elif (arglen == 5 and argv1 == "update" and  os.path.exists(sys.argv[4])):
+        resp = pyblog_utils.updatepost(sys.argv[4], sys.argv[2])
+    else:
+        exit()
+print(resp)
