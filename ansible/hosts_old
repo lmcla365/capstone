@@ -1,0 +1,12 @@
+[docker]
+infraIP ansible_host=34.230.87.234
+stageIP ansible_host=54.164.51.232
+prodIP ansible_host=54.91.167.24
+
+
+[all:vars]
+ansible_connection=ssh
+ansible_user=ubuntu
+#ansible_ssh_pass=Beckrich
+ansible_ssh_private_key_file=/home/catkinson2274/GIT/capstone/NULLkey.pem
+
