@@ -32,6 +32,15 @@ services:
       MYSQL_USER: exampleuser
       MYSQL_PASSWORD: examplepass
       MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    logging:
+      driver: splunk
+      options:
+        splunk-format: "json"
+        splunk-insecureskipverify: "true"
+        splunk-source: "app"
+        splunk-token: "37a1d361-2114-400b-a0c7-3c84ddd3074d"
+        splunk-url: "https://prd-p-s74ir.splunkcloud.com:8088"
+        tag: "{{.ImageName}}/{{.Name}}/{{.ID}}"
     volumes:
       - type: bind
         source: /mnt/sql

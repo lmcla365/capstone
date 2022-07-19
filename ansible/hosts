@@ -1,7 +1,9 @@
-[docker]
-infraIP ansible_host=34.230.87.234
-stageIP ansible_host=54.164.51.232
-prodIP ansible_host=54.91.167.24
+[infra]
+infraIP ansible_host=54.144.230.135
+
+[wordpress]
+stageIP ansible_host=18.233.147.22
+prodIP ansible_host=3.92.237.229
 
 
 [all:vars]
