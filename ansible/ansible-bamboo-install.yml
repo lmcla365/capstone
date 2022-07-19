@@ -1,0 +1,23 @@
+- name: Create a container for bamboo
+  hosts: infra
+  become: yes
+  tasks:
+    - name: Start docker for bamboo
+      community.docker.docker_container:
+        name: bamboo
+        image: jrrickerson/capstone-bamboo
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+          - /mnt/bamboo:/var/atlassian/application-data/bamboo
+        groups:
+          - docker
+        ports:
+          - "54663:54663"
+          - "8085:8085"
+        log_driver: splunk
+        log_options:
+          splunk-token: 9df68219-4642-41cc-ad0d-f60ca01c1062
+          splunk-url: https://prd-p-s74ir.splunkcloud.com:8088
+          splunk-insecureskipverify: "true"
+          tag: bamboo
+        state: started
