@@ -44,16 +44,20 @@ def test_searchpost():
 
 
 def test_writepost():
-    f = open("infile.txt", "a")
-    f.write("Writepost test \n\nNow the file has content!")
+    f = open("infile.txt", "w")
+    f.write("""Hello world!
+<p>Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p>
+""")
     f.close()
     val = pyblog_utils.writepost("infile.txt")
     assert val == "Post written to Wordpress."
 
 
 def test_updatepost():
-    f = open("update.txt", "a")
-    f.write("Updatepost test \n\nNow the file has been updated!")
+    f = open("update.txt", "w")
+    f.write("""Hello world!
+<p>Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p>
+""")
     f.close()
     postid = pyblog_utils.getlastpostid()
     val = pyblog_utils.updatepost("update.txt", postid)
