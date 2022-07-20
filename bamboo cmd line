@@ -1,4 +1,0 @@
-sudo docker run --group-add $(getent group docker | cut -d ":" -f 3) -v /var/run/docker.sock:/var/run/docker.sock -v /mnt/bamboo:/var/atlassian/application-data/bamboo --name="bamboo" --init -d -p 54663:54663 -p 8085:8085 jrrickerson/capstone-bamboo
-
-bamboo with splunk
-sudo docker run --log-driver=splunk --log-opt splunk-token=9df68219-4642-41cc-ad0d-f60ca01c1062 --log-opt splunk-url=https://prd-p-s74ir.splunkcloud.com:8088 --log-opt splunk-insecureskipverify="true" --log-opt tag="{{.ImageName}}/{{.Name}}/{{.ID}}" --group-add $(getent group docker | cut -d ":" -f 3) -v /var/run/docker.sock:/var/run/docker.sock -v /mnt/bamboo:/var/atlassian/application-data/bamboo --name="bamboo" --init -d -p 54663:54663 -p 8085:8085 jrrickerson/capstone-bamboo
