@@ -4,8 +4,6 @@
 # Methods for accessing Wordpress API V:2
 import sys
 import os
-
-# import argparse
 import pyblog_utils
 
 # 1st check if wordpress is running.
@@ -17,6 +15,7 @@ arglen = len(sys.argv)
 if arglen < 2 or sys.argv[1].lower() == "help":
     print(
         """    *** How to use pyblog ***
+    HELP:  python3 pyblog.py help
     Upload a blogpost from file:  python3 pyblog.py upload -f <filename>
     Update a blogpost from file by blog id:  python3 pyblog.py update -f <filename>  <id>
     Show the latest blog post:  python3 pyblog.py latestpost
