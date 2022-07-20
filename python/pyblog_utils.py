@@ -16,6 +16,7 @@ token = base64.b64encode(credentials.encode())
 header = {"Authorization": "Basic " + token.decode("utf-8")}
 resp = ""
 
+
 def wphealthcheck():
     page = requests.get(base_url)
     # print(type(page))
