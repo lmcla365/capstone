@@ -1,12 +1,8 @@
 import requests
-
-# import json
 import base64
 import os
 import fileinput
 
-
-# base_url = 'http://localhost:8080/'
 errorstr = "Check the supplied arguments and user credentials defined in Application Passwords. Error: "
 base_url = os.environ.get("WORDPRESSURL")  # , "http://3.80.76.206:8080/")
 apiuser = os.environ.get("APIUSER")  # , "student")
@@ -17,10 +13,8 @@ else:
     print("Set system varibles on target system for WORDPRESSURL, APIUSER, APIPWD")
     exit()
 token = base64.b64encode(credentials.encode())
-
-
+header = {"Authorization": "Basic " + token.decode("utf-8")}
 resp = ""
-
 
 def wphealthcheck():
     page = requests.get(base_url)
@@ -45,7 +39,6 @@ def readinfile(infile):
 # Read latest post
 def readpost(id):
     url = base_url + "/wp-json/wp/v2/posts?include=" + str(id)
-    header = {"Authorization": "Basic " + token.decode("utf-8")}
     response = requests.get(url, headers=header)
     if response.json() == []:
         resp = "Post ID not valid."
@@ -64,7 +57,6 @@ def readpost(id):
 # Get all posts and pass latest to readpost
 def getposts():
     url = base_url + "/wp-json/wp/v2/posts"
-    header = {"Authorization": "Basic " + token.decode("utf-8")}
     response = requests.get(url, headers=header)
     if str(response.status_code)[0] == "2":
         response_json = response.json()
@@ -76,7 +68,6 @@ def getposts():
 
 def getlastpostid():
     url = base_url + "/wp-json/wp/v2/posts"
-    header = {"Authorization": "Basic " + token.decode("utf-8")}
     response = requests.get(url, headers=header)
     if str(response.status_code)[0] == "2":
         response_json = response.json()
@@ -89,7 +80,6 @@ def getlastpostid():
 # Lists all posts by id and title
 def listposts():
     url = base_url + "/wp-json/wp/v2/posts"
-    header = {"Authorization": "Basic " + token.decode("utf-8")}
     response = requests.get(url, headers=header)
     if str(response.status_code)[0] == "2":
         response_json = response.json()
@@ -102,7 +92,6 @@ def listposts():
                 + response_json[i].get("title").get("rendered")
                 + "\n"
             )
-            # print(response_json[i].get('id'),'     ',response_json[i].get('title').get('rendered'))
             i += 1
     else:
         resp = errorstr + str(response.status_code)
@@ -112,8 +101,6 @@ def listposts():
 # search post by keyword
 def searchpost(search):
     url = base_url + "/wp-json/wp/v2/posts?search=" + search
-    print(url)
-    header = {"Authorization": "Basic " + token.decode("utf-8")}
     response = requests.get(url, headers=header)
     if str(response.status_code)[0] == "2":
         response_json = response.json()
@@ -130,7 +117,6 @@ def searchpost(search):
 def writepost(infile):
     title, content = readinfile(infile)
     url = base_url + "/wp-json/wp/v2/posts"
-    header = {"Authorization": "Basic " + token.decode("utf-8")}
     post = {"title": title, "status": "publish", "content": content}
     response = requests.post(url, headers=header, json=post)
     if str(response.status_code)[0] == "2":
@@ -142,10 +128,7 @@ def writepost(infile):
 
 def updatepost(infile, id):
     title, content = readinfile(infile)
-    print("title::: ", title)
     url = base_url + "/wp-json/wp/v2/posts/" + str(id)
-    print(url)
-    header = {"Authorization": "Basic " + token.decode("utf-8")}
     post = {
         "title": title,
         "status": "publish",
@@ -162,7 +145,6 @@ def updatepost(infile, id):
 
 def postcomment(id, MyComment, author_name, author_email):
     url = base_url + "/wp-json/wp/v2/comments"
-    header = {"Authorization": "Basic " + token.decode("utf-8")}
     post = {
         "post": id,
         "content": MyComment,
