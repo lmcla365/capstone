@@ -47,6 +47,7 @@ if arglen >= 2:
         resp = pyblog_utils.postcomment(
             str(sys.argv[2]), sys.argv[3], sys.argv[4], sys.argv[5]
         )
-    else:
-        checkarg("help")
-print(resp)
+    print(resp)
+else:
+    checkarg("help")
+
