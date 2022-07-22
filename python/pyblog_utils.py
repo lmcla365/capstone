@@ -4,9 +4,9 @@ import os
 import fileinput
 
 errorstr = "Check the supplied arguments and user credentials defined in Application Passwords. Error: "
-base_url = os.environ.get("WORDPRESSURL")  # , "http://3.80.76.206:8080/")
-apiuser = os.environ.get("APIUSER")  # , "student")
-apipwd = os.environ.get("APIPWD")  # , "lp3P xt98 GFXx TzB0 cwmB 7bVO")
+base_url = os.environ.get("WORDPRESSURL")
+apiuser = os.environ.get("APIUSER")
+apipwd = os.environ.get("APIPWD")
 if isinstance(apiuser, str):
     credentials = apiuser + ":" + apipwd
 else:
